@@ -6,6 +6,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  transition: all 0.5s ease-out;
 }
 
 body {
@@ -29,11 +30,19 @@ body {
   width: 100%;
   height: 100%;
   background: hsl(200, 100%, 30%);
+  position: absolute;
+  top: 0vh;
+  left: 0vh;
+}
+
+.start-screen-up {
+  top: -100vh;
 }
 
 .start-center {
   transform: translate(-50%, -50%);
   position: absolute;
+  z-index: 200;
   top: 50vh;
   left: 50vw;
 }
@@ -42,9 +51,9 @@ body {
   font-size: 40px;
   background-color: hsl(200, 100%, 75%);
   color: black;
-  height: 90px;
+  height: 160px;
   width: 160px;
-  border-radius: 8px;
+  border-radius: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -81,4 +90,116 @@ body {
     height: 100vmin;
     background-color: hsla(0, 0%, 100%, 0);
   }
+}
+
+/* Questions */
+.questions-row {
+  width: 100vw;
+  height: 100vh;
+  position: absolute;
+  top: 100vh;
+  left: 0px;
+  z-index: 300;
+  background: hsl(200, 100%, 30%);
+  color: black;
+  font-size: 22px;
+  font-weight: 600;
+}
+
+.quiz-started {
+  top: 0vh;
+}
+
+.question-wraper {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.question-box {
+  width: 400px;
+  min-height: 400px;
+  background-color: hsl(0, 0%, 100%);
+  border-radius: 8px;
+  padding: 18px;
+}
+
+.question {
+  margin: 10px 0px;
+  text-align: justify;
+  line-height: 30px;
+  letter-spacing: 1px;
+  min-width: 100%;
+  min-height: 30px;
+}
+
+.options {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  margin: 30px 0px;
+}
+
+.opt {
+  flex-shrink: 0;
+  background: hsl(200, 100%, 50%);
+  color: white;
+  padding: 8px;
+  margin: 8px;
+  min-width: calc(50% - 16px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.buttons {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 100px;
+}
+
+.button {
+  width: 40%;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.prev-button {
+  border-radius: 20px 0px 0px 20px;
+  position: relative;
+  border: 2px solid hsl(0, 0%, 80%);
+}
+
+.prev-button::after,
+.next-button::after {
+  content: "";
+  width: 10px;
+  height: 10px;
+  border: 2px solid black;
+  border-width: 2px 2px 0px 0px;
+  position: absolute;
+  transform: rotate(45deg);
+}
+
+.prev-button::after {
+  left: 10px;
+  transform: rotate(-135deg);
+}
+
+.next-button::after {
+  right: 10px;
+}
+
+.next-button {
+  border-radius: 0px 20px 20px 0px;
+  position: relative;
+  border: 2px solid hsl(0, 0%, 80%);
 }
