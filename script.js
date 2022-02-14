@@ -1,4 +1,5 @@
-const questions = [
+"use strict";
+const questionArray1 = [
   {
     question: "What is The Value of 10 - 5",
     options: [
@@ -73,6 +74,9 @@ const questions = [
   },
 ];
 
+// VARIABLES AND CONSTANTS
+
+const questions = [...questionArray1];
 let marksArray = [];
 let marksObtained = 0;
 let totalMarks = questions.length;
@@ -87,78 +91,73 @@ const questionRow = document.querySelector(".questions-row");
 const prevButton = document.querySelectorAll(".prev-button");
 const resultScreen = document.querySelector(".result-screen");
 
-startButton.addEventListener("click", () => {
-  app.scrollTop = window.innerHeight;
-});
+// FUNCTIONS
 
-for (let i = 0; i < questions.length; i++) {
-  const question = questions[i];
-  questionRow.innerHTML += `<div class="question-wraper">
-    <div class="question-box">
-        <div class="question">${question.question}</div>
-        <div class="options">
-            <div class="opt q-no-${i}">${question.options[0].opt}</div>
-            <div class="opt q-no-${i}">${question.options[1].opt}</div>
-            <div class="opt q-no-${i}">${question.options[2].opt}</div>
-            <div class="opt q-no-${i}">${question.options[3].opt}</div>
-        </div>
-        <div class="buttons">
-            <div class="button prev-button">Previous</div>
-            <div class="button next-button">Next</div>
-        </div>
-    </div>
-</div>`;
+function populateQuestions(questionsArray) {
+  questionRow.innerHTML = "";
+  for (let i = 0; i < questionsArray.length; i++) {
+    const question = questionsArray[i];
+    questionRow.innerHTML += `<div class="question-wraper flex center">
+      <div class="question-box">
+          <div class="question">${question.question}</div>
+          <div class="options flex row">
+              <div class="opt q-no-${i} flex center">${question.options[0].opt}</div>
+              <div class="opt q-no-${i} flex center">${question.options[1].opt}</div>
+              <div class="opt q-no-${i} flex center">${question.options[2].opt}</div>
+              <div class="opt q-no-${i} flex center">${question.options[3].opt}</div>
+          </div>
+          <div class="buttons flex">
+              <div class="button flex center prev-button">Previous</div>
+              <div class="button flex center next-button">Next</div>
+          </div>
+      </div>
+  </div>`;
+  }
 }
 
-document.getElementsByClassName("prev-button")[0].style.pointerEvents = "none";
-document.getElementsByClassName("prev-button")[0].style.color = "grey";
-
-let nextBtnArray = document.getElementsByClassName("next-button");
-let lastnextBtn =
-  document.getElementsByClassName("next-button")[nextBtnArray.length - 1];
-
-lastnextBtn.classList.add("submit-button");
-lastnextBtn.innerHTML = "Submit";
-lastnextBtn.classList.remove("next-button");
-
-for (let j = 0; j < questions.length; j++) {
-  const question = questions[j];
-  const prevbtn = document.getElementsByClassName("prev-button")[j];
-  const nextbtn = document.getElementsByClassName("next-button")[j];
-  const optionsforq = document.getElementsByClassName(`q-no-${j}`);
-
-  for (let n = 0; n < optionsforq.length; n++) {
-    const newOption = optionsforq[n];
-    newOption.addEventListener("click", () => {
-      for (let p = 0; p < optionsforq.length; p++) {
-        const optionforbg = optionsforq[p];
-        optionforbg.style.backgroundColor = "hsl(200, 100%, 30%)";
-      }
-      newOption.style.backgroundColor = "hsl(200, 100%, 50%)";
-      if (question.options[n].isTrue) {
-        marksArray[j] = 1;
-      } else {
-        marksArray[j] = 0;
-      }
-    });
-  }
-
-  prevbtn.addEventListener("click", () => {
-    if (j != 0) {
-      questionRow.scrollLeft = window.innerWidth * (j - 1);
+function startQuiz() {
+  questionRow.scrollLeft = 0;
+  for (let j = 0; j < questions.length; j++) {
+    const optionsforq = document.getElementsByClassName(`q-no-${j}`);
+    for (let n = 0; n < optionsforq.length; n++) {
+      const newOption = optionsforq[n];
+      newOption.classList.add("unselected");
+      newOption.classList.remove("selected");
     }
-  });
-
-  if (j < questions.length - 1) {
-    nextbtn.addEventListener("click", () => {
-      questionRow.scrollLeft = window.innerWidth * (j + 1);
-    });
   }
+  for (let m = 0; m < questions.length; m++) {
+    marksArray[m] = 0;
+  }
+  app.scrollTop = window.innerHeight;
+  questionRow.scrollLeft = 0;
 }
 
-document
-  .getElementsByClassName("submit-button")[0]
-  .addEventListener("click", () => {
+function PreveNextSubmitButton() {
+  for (let p = 0; p < questions.length; p++) {
+    const prevbtn = document.getElementsByClassName("prev-button")[p];
+    const nextbtn = document.getElementsByClassName("next-button")[p];
+    if (p != 0) {
+      prevbtn.addEventListener("click", () => {
+        questionRow.scrollLeft = window.innerWidth * (p - 1);
+      });
+    } else {
+      prevbtn.style.color = "grey";
+      prevbtn.style.pointerEvents = "none";
+    }
+
+    if (p < questions.length - 1) {
+      nextbtn.addEventListener("click", () => {
+        questionRow.scrollLeft = window.innerWidth * (p + 1);
+      });
+    } else {
+      nextbtn.classList.add("submit-button");
+      nextbtn.innerHTML = "Submit";
+      nextbtn.classList.remove("next-button");
+    }
+  }
+
+  const submitbtn = document.getElementsByClassName("submit-button")[0];
+  submitbtn.addEventListener("click", () => {
     marksObtained = 0;
     for (const questionMark of marksArray) {
       marksObtained += questionMark;
@@ -170,21 +169,40 @@ document
       marksObtained = "0" + parseInt(marksObtained);
     }
     app.scrollTop = window.innerHeight * 2;
-    resultScreen.innerHTML = `<div class="your-result">Your Result is ${marksObtained}/${totalMarks}</div>
-    <div class="restart-button" onclick="startQuiz()">Restart</div>`;
+    resultScreen.innerHTML = `<div class="your-result">Your Score is&nbsp; ${marksObtained}/${totalMarks}</div>
+    <div class="restart-button flex center" onclick="startQuiz()">Restart</div>`;
   });
+}
 
-function startQuiz() {
-  questionRow.scrollLeft = 0;
+function questionChecker() {
   for (let j = 0; j < questions.length; j++) {
+    const question = questions[j];
     const optionsforq = document.getElementsByClassName(`q-no-${j}`);
+
     for (let n = 0; n < optionsforq.length; n++) {
       const newOption = optionsforq[n];
-      newOption.style.backgroundColor = "hsl(200, 100%, 30%)";
+      newOption.addEventListener("click", () => {
+        for (let p = 0; p < optionsforq.length; p++) {
+          const optionforbg = optionsforq[p];
+          optionforbg.classList.remove("selected");
+          newOption.classList.add("unselected");
+        }
+        newOption.classList.add("selected");
+        newOption.classList.remove("unselected");
+        if (question.options[n].isTrue) {
+          marksArray[j] = 1;
+        } else {
+          marksArray[j] = 0;
+        }
+      });
     }
   }
-  for (let m = 0; m < questions.length; m++) {
-    marksArray[m] = 0;
-  }
-  app.scrollTop = window.innerHeight;
 }
+
+// SEQUENCE
+
+populateQuestions(questions);
+PreveNextSubmitButton();
+questionChecker();
+app.scrollTop = 0;
+questionRow.scrollTop = 0;
