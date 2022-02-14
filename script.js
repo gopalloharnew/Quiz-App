@@ -21,9 +21,9 @@ const questions = [
     question: "what is 5*5/1",
     options: [
       { opt: "100", isTrue: false },
-      { opt: "50", isTrue: true },
+      { opt: "50", isTrue: false },
       { opt: "115", isTrue: false },
-      { opt: "25", isTrue: false },
+      { opt: "25", isTrue: true },
     ],
   },
   {
@@ -39,12 +39,19 @@ const questions = [
     question: "The 'Third Option' is Correct",
     options: [
       { opt: "Option 1", isTrue: false },
-      { opt: "Last Option", isTrue: true },
+      { opt: "Third Option", isTrue: true },
       { opt: "Another Option", isTrue: false },
-      { opt: "Third Option", isTrue: false },
+      { opt: "Last Option", isTrue: false },
     ],
   },
 ];
+
+let marksArray = [];
+let marksObtained = 0;
+let totalMarks = questions.length;
+for (let m = 0; m < questions.length; m++) {
+  marksArray.push(0);
+}
 
 const startButton = document.querySelector(".start-button");
 const startScreen = document.querySelector(".start-screen");
@@ -62,10 +69,10 @@ for (let i = 0; i < questions.length; i++) {
     <div class="question-box">
         <div class="question">${question.question}</div>
         <div class="options">
-            <div class="opt">${question.options[0].opt}</div>
-            <div class="opt">${question.options[1].opt}</div>
-            <div class="opt">${question.options[2].opt}</div>
-            <div class="opt">${question.options[3].opt}</div>
+            <div class="opt q-no-${i}">${question.options[0].opt}</div>
+            <div class="opt q-no-${i}">${question.options[1].opt}</div>
+            <div class="opt q-no-${i}">${question.options[2].opt}</div>
+            <div class="opt q-no-${i}">${question.options[3].opt}</div>
         </div>
         <div class="buttons">
             <div class="button prev-button">Previous</div>
@@ -90,6 +97,23 @@ for (let j = 0; j < questions.length; j++) {
   const question = questions[j];
   const prevbtn = document.getElementsByClassName("prev-button")[j];
   const nextbtn = document.getElementsByClassName("next-button")[j];
+  const optionsforq = document.getElementsByClassName(`q-no-${j}`);
+
+  for (let n = 0; n < optionsforq.length; n++) {
+    const newOption = optionsforq[n];
+    newOption.addEventListener("click", () => {
+      for (let p = 0; p < optionsforq.length; p++) {
+        const optionforbg = optionsforq[p];
+        optionforbg.style.backgroundColor = "hsl(200, 100%, 50%)";
+      }
+      newOption.style.backgroundColor = "hsl(200, 100%, 25%)";
+      if (question.options[n].isTrue) {
+        marksArray[j] = 1;
+      } else {
+        marksArray[j] = 0;
+      }
+    });
+  }
 
   prevbtn.addEventListener("click", () => {
     if (j != 0) {
@@ -103,3 +127,12 @@ for (let j = 0; j < questions.length; j++) {
     });
   }
 }
+
+document
+  .getElementsByClassName("submit-button")[0]
+  .addEventListener("click", () => {
+    marksObtained = 0;
+    for (const questionMark of marksArray) {
+      marksObtained += questionMark;
+    }
+  });
