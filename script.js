@@ -44,6 +44,33 @@ const questions = [
       { opt: "Last Option", isTrue: false },
     ],
   },
+  {
+    question: "This is a latest Question",
+    options: [
+      { opt: "Old Anwer", isTrue: false },
+      { opt: "No Answer", isTrue: false },
+      { opt: "Correct Answer", isTrue: false },
+      { opt: "Latest Answer", isTrue: true },
+    ],
+  },
+  {
+    question: "The 'Third Option' is Correct",
+    options: [
+      { opt: "Option 1", isTrue: false },
+      { opt: "Third Option", isTrue: true },
+      { opt: "Another Option", isTrue: false },
+      { opt: "Last Option", isTrue: false },
+    ],
+  },
+  {
+    question: "The 'Third Option' is Correct",
+    options: [
+      { opt: "Option 1", isTrue: false },
+      { opt: "Third Option", isTrue: true },
+      { opt: "Another Option", isTrue: false },
+      { opt: "Last Option", isTrue: false },
+    ],
+  },
 ];
 
 let marksArray = [];
@@ -136,11 +163,11 @@ document
     for (const questionMark of marksArray) {
       marksObtained += questionMark;
     }
-    if (totalMarks < 9) {
-      totalMarks = "0" + totalMarks;
+    if (parseInt(totalMarks) < 9) {
+      totalMarks = "0" + parseInt(totalMarks);
     }
-    if (marksObtained < 9) {
-      marksObtained = "0" + marksObtained;
+    if (parseInt(marksObtained) < 9) {
+      marksObtained = "0" + parseInt(marksObtained);
     }
     app.scrollTop = window.innerHeight * 2;
     resultScreen.innerHTML = `<div class="your-result">Your Result is ${marksObtained}/${totalMarks}</div>
@@ -148,5 +175,16 @@ document
   });
 
 function startQuiz() {
-  console.log("HII");
+  questionRow.scrollLeft = 0;
+  for (let j = 0; j < questions.length; j++) {
+    const optionsforq = document.getElementsByClassName(`q-no-${j}`);
+    for (let n = 0; n < optionsforq.length; n++) {
+      const newOption = optionsforq[n];
+      newOption.style.backgroundColor = "hsl(200, 100%, 30%)";
+    }
+  }
+  for (let m = 0; m < questions.length; m++) {
+    marksArray[m] = 0;
+  }
+  app.scrollTop = window.innerHeight;
 }

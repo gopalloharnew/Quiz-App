@@ -216,7 +216,7 @@ body {
   align-items: center;
   justify-content: space-evenly;
   flex-direction: column;
-  font-size: 8vw;
+  font-size: 5vw;
   font-family: monospace;
 }
 
@@ -251,13 +251,13 @@ body {
 .restart-button {
   background-color: hsl(200, 100%, 50%);
   visibility: hidden;
-  font-size: 5vw;
+  font-size: 4vw;
   display: flex;
-  width: 25vw;
-  height: 8vw;
+  width: 20vw;
+  height: 5vw;
   align-items: center;
   justify-content: center;
-  border-radius: 8px;
+  border-radius: 4px;
   overflow: hidden;
   animation: restartbutton 01s 1 6s forwards;
   cursor: pointer;
