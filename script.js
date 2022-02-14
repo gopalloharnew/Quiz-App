@@ -1,75 +1,93 @@
 "use strict";
 const questionArray1 = [
   {
-    question: "What is The Value of 10 - 5",
+    question: `MS-Word is an example of`,
     options: [
-      { opt: "10", isTrue: false },
-      { opt: "5", isTrue: true },
-      { opt: "15", isTrue: false },
-      { opt: "0", isTrue: false },
+      { opt: `An operating system `, isTrue: false },
+      { opt: `A processing device `, isTrue: false },
+      { opt: `Application software`, isTrue: true },
+      { opt: `An input device`, isTrue: false },
     ],
   },
   {
-    question: "Which of the Following is Answer",
+    question: `Ctrl, Shift and Alt are called .......... keys`,
     options: [
-      { opt: "Answer", isTrue: true },
-      { opt: "Question", isTrue: false },
-      { opt: "Correct", isTrue: false },
-      { opt: "Right", isTrue: false },
+      { opt: `modifier`, isTrue: true },
+      { opt: `function`, isTrue: false },
+      { opt: `alphanumeric`, isTrue: false },
+      { opt: `adjustment`, isTrue: false },
     ],
   },
   {
-    question: "what is 5*5/1",
+    question: `A computer cannot "boot" if it does not have the ____`,
     options: [
-      { opt: "100", isTrue: false },
-      { opt: "50", isTrue: false },
-      { opt: "115", isTrue: false },
-      { opt: "25", isTrue: true },
+      { opt: `Compiler`, isTrue: false },
+      { opt: `Loader `, isTrue: false },
+      { opt: `Operating system`, isTrue: true },
+      { opt: `Assembler`, isTrue: false },
     ],
   },
   {
-    question: "When is Independence day",
+    question: `Junk e-mail is also called ___`,
     options: [
-      { opt: "15/07/1947 only", isTrue: false },
-      { opt: "26/01", isTrue: false },
-      { opt: "15/07", isTrue: true },
-      { opt: "0", isTrue: false },
+      { opt: `Spam`, isTrue: true },
+      { opt: `Spoof`, isTrue: false },
+      { opt: `Sniffer script`, isTrue: false },
+      { opt: `Spool`, isTrue: false },
     ],
   },
   {
-    question: "The 'Third Option' is Correct",
+    question: `____are attempts by individuals to obtain confidential information from you by falsifying their identity`,
     options: [
-      { opt: "Option 1", isTrue: false },
-      { opt: "Third Option", isTrue: true },
-      { opt: "Another Option", isTrue: false },
-      { opt: "Last Option", isTrue: false },
+      { opt: `Phishing trips`, isTrue: false },
+      { opt: `Computer viruses`, isTrue: false },
+      { opt: `Phishing scams`, isTrue: true },
+      { opt: `Spyware scams`, isTrue: false },
     ],
   },
   {
-    question: "This is a latest Question",
+    question: `Several computers linked to a server to share programs and storage space___`,
     options: [
-      { opt: "Old Anwer", isTrue: false },
-      { opt: "No Answer", isTrue: false },
-      { opt: "Correct Answer", isTrue: false },
-      { opt: "Latest Answer", isTrue: true },
+      { opt: `Network`, isTrue: true },
+      { opt: `Grouping`, isTrue: false },
+      { opt: `Library`, isTrue: false },
+      { opt: `Integrated system`, isTrue: false },
     ],
   },
   {
-    question: "The 'Third Option' is Correct",
+    question: `Where is RAM located?`,
     options: [
-      { opt: "Option 1", isTrue: false },
-      { opt: "Third Option", isTrue: true },
-      { opt: "Another Option", isTrue: false },
-      { opt: "Last Option", isTrue: false },
+      { opt: `Mother Board `, isTrue: true },
+      { opt: `Expansion Board`, isTrue: false },
+      { opt: `External Drive`, isTrue: false },
+      { opt: `Father Board`, isTrue: false },
     ],
   },
   {
-    question: "The 'Third Option' is Correct",
+    question: `__ is a software program used to view Web pages`,
     options: [
-      { opt: "Option 1", isTrue: false },
-      { opt: "Third Option", isTrue: true },
-      { opt: "Another Option", isTrue: false },
-      { opt: "Last Option", isTrue: false },
+      { opt: `site`, isTrue: false },
+      { opt: `host`, isTrue: false },
+      { opt: `link`, isTrue: false },
+      { opt: `browser`, isTrue: true },
+    ],
+  },
+  {
+    question: `The first computer was programmed using ....`,
+    options: [
+      { opt: `Assembly language`, isTrue: false },
+      { opt: `Machine language`, isTrue: true },
+      { opt: `Spaghetti code`, isTrue: false },
+      { opt: `Source code`, isTrue: false },
+    ],
+  },
+  {
+    question: `The function of BIOS is to`,
+    options: [
+      { opt: `Initialize the system hardware components`, isTrue: true },
+      { opt: `Update the system`, isTrue: false },
+      { opt: `Ensure system performance`, isTrue: false },
+      { opt: `Save the system from crashing`, isTrue: false },
     ],
   },
 ];
@@ -199,10 +217,28 @@ function questionChecker() {
   }
 }
 
+function setOptWidth() {
+  for (let j = 0; j < questions.length; j++) {
+    const question = questions[j];
+    const optionsforq = document.getElementsByClassName(`q-no-${j}`);
+    let widthopt = optionsforq[0].offsetWidth;
+    for (let n = 0; n < optionsforq.length; n++) {
+      console.log("J");
+      if (optionsforq[n].offsetWidth != widthopt) {
+        for (let n = 0; n < optionsforq.length; n++) {
+          const newOption = optionsforq[n];
+          newOption.style.width = "100%";
+        }
+      }
+    }
+  }
+}
+
 // SEQUENCE
 
 populateQuestions(questions);
 PreveNextSubmitButton();
 questionChecker();
+setOptWidth();
 app.scrollTop = 0;
 questionRow.scrollTop = 0;

@@ -145,10 +145,11 @@ body {
 
 .question-box {
   width: 400px;
-  min-height: 400px;
+  min-height: 500px;
   background-color: hsl(0, 0%, 100%);
   border-radius: 8px;
-  padding: 18px;
+  padding: 20px;
+  position: relative;
 }
 
 .question {
@@ -162,6 +163,8 @@ body {
 
 .options {
   flex-wrap: wrap;
+  align-items: center;
+  width: 100%;
   margin: 30px 0px;
 }
 
@@ -172,6 +175,8 @@ body {
   padding: 8px;
   margin: 4px;
   min-width: calc(50% - 8px);
+  max-width: calc(100% - 10px);
+  min-height: 30px;
   border-radius: 4px;
   cursor: pointer;
   transition: 0s;
@@ -187,7 +192,9 @@ body {
 
 .buttons {
   justify-content: space-between;
-  margin-top: 100px;
+  position: absolute;
+  bottom: 20px;
+  width: calc(100% - 40px);
 }
 
 .button {
