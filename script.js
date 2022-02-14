@@ -53,14 +53,15 @@ for (let m = 0; m < questions.length; m++) {
   marksArray.push(0);
 }
 
+const app = document.querySelector("#app");
 const startButton = document.querySelector(".start-button");
 const startScreen = document.querySelector(".start-screen");
 const questionRow = document.querySelector(".questions-row");
 const prevButton = document.querySelectorAll(".prev-button");
+const resultScreen = document.querySelector(".result-screen");
 
 startButton.addEventListener("click", () => {
-  startScreen.classList.add("start-screen-up");
-  questionRow.classList.add("quiz-started");
+  app.scrollTop = window.innerHeight;
 });
 
 for (let i = 0; i < questions.length; i++) {
@@ -104,9 +105,9 @@ for (let j = 0; j < questions.length; j++) {
     newOption.addEventListener("click", () => {
       for (let p = 0; p < optionsforq.length; p++) {
         const optionforbg = optionsforq[p];
-        optionforbg.style.backgroundColor = "hsl(200, 100%, 50%)";
+        optionforbg.style.backgroundColor = "hsl(200, 100%, 30%)";
       }
-      newOption.style.backgroundColor = "hsl(200, 100%, 25%)";
+      newOption.style.backgroundColor = "hsl(200, 100%, 50%)";
       if (question.options[n].isTrue) {
         marksArray[j] = 1;
       } else {
@@ -135,4 +136,17 @@ document
     for (const questionMark of marksArray) {
       marksObtained += questionMark;
     }
+    if (totalMarks < 9) {
+      totalMarks = "0" + totalMarks;
+    }
+    if (marksObtained < 9) {
+      marksObtained = "0" + marksObtained;
+    }
+    app.scrollTop = window.innerHeight * 2;
+    resultScreen.innerHTML = `<div class="your-result">Your Result is ${marksObtained}/${totalMarks}</div>
+    <div class="restart-button" onclick="startQuiz()">Restart</div>`;
   });
+
+function startQuiz() {
+  console.log("HII");
+}
