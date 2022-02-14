@@ -48,17 +48,17 @@ const questionArray1 = [
   {
     question: `Several computers linked to a server to share programs and storage space___`,
     options: [
-      { opt: `Network`, isTrue: true },
       { opt: `Grouping`, isTrue: false },
       { opt: `Library`, isTrue: false },
+      { opt: `Network`, isTrue: true },
       { opt: `Integrated system`, isTrue: false },
     ],
   },
   {
     question: `Where is RAM located?`,
     options: [
-      { opt: `Mother Board `, isTrue: true },
       { opt: `Expansion Board`, isTrue: false },
+      { opt: `Mother Board `, isTrue: true },
       { opt: `External Drive`, isTrue: false },
       { opt: `Father Board`, isTrue: false },
     ],
@@ -76,9 +76,9 @@ const questionArray1 = [
     question: `The first computer was programmed using ....`,
     options: [
       { opt: `Assembly language`, isTrue: false },
-      { opt: `Machine language`, isTrue: true },
       { opt: `Spaghetti code`, isTrue: false },
       { opt: `Source code`, isTrue: false },
+      { opt: `Machine language`, isTrue: true },
     ],
   },
   {
@@ -118,7 +118,7 @@ function populateQuestions(questionsArray) {
     questionRow.innerHTML += `<div class="question-wraper flex center">
       <div class="question-box">
           <div class="question">${question.question}</div>
-          <div class="options flex row">
+          <div class="options flex column">
               <div class="opt q-no-${i} flex center">${question.options[0].opt}</div>
               <div class="opt q-no-${i} flex center">${question.options[1].opt}</div>
               <div class="opt q-no-${i} flex center">${question.options[2].opt}</div>
@@ -217,28 +217,10 @@ function questionChecker() {
   }
 }
 
-function setOptWidth() {
-  for (let j = 0; j < questions.length; j++) {
-    const question = questions[j];
-    const optionsforq = document.getElementsByClassName(`q-no-${j}`);
-    let widthopt = optionsforq[0].offsetWidth;
-    for (let n = 0; n < optionsforq.length; n++) {
-      console.log("J");
-      if (optionsforq[n].offsetWidth != widthopt) {
-        for (let n = 0; n < optionsforq.length; n++) {
-          const newOption = optionsforq[n];
-          newOption.style.width = "100%";
-        }
-      }
-    }
-  }
-}
-
 // SEQUENCE
 
 populateQuestions(questions);
 PreveNextSubmitButton();
 questionChecker();
-setOptWidth();
 app.scrollTop = 0;
 questionRow.scrollTop = 0;

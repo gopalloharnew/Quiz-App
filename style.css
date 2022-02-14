@@ -174,8 +174,7 @@ body {
   color: white;
   padding: 8px;
   margin: 4px;
-  min-width: calc(50% - 8px);
-  max-width: calc(100% - 10px);
+  width: 100%;
   min-height: 30px;
   border-radius: 4px;
   cursor: pointer;
