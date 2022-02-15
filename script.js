@@ -10,7 +10,7 @@ const questionArray1 = [
     ],
   },
   {
-    question: `Ctrl, Shift and Alt are called .......... keys`,
+    question: `Ctrl, Shift and Alt are called ... keys`,
     options: [
       { opt: `modifier`, isTrue: true },
       { opt: `function`, isTrue: false },
@@ -19,7 +19,7 @@ const questionArray1 = [
     ],
   },
   {
-    question: `A computer cannot "boot" if it does not have the ____`,
+    question: `A computer cannot "boot" if it does not have the ... `,
     options: [
       { opt: `Compiler`, isTrue: false },
       { opt: `Loader `, isTrue: false },
@@ -28,7 +28,7 @@ const questionArray1 = [
     ],
   },
   {
-    question: `Junk e-mail is also called ___`,
+    question: `Junk e-mail is also called ... `,
     options: [
       { opt: `Spam`, isTrue: true },
       { opt: `Spoof`, isTrue: false },
@@ -37,7 +37,7 @@ const questionArray1 = [
     ],
   },
   {
-    question: `____are attempts by individuals to obtain confidential information from you by falsifying their identity`,
+    question: ` ... are attempts by individuals to obtain confidential information from you by falsifying their identity`,
     options: [
       { opt: `Phishing trips`, isTrue: false },
       { opt: `Computer viruses`, isTrue: false },
@@ -46,7 +46,7 @@ const questionArray1 = [
     ],
   },
   {
-    question: `Several computers linked to a server to share programs and storage space___`,
+    question: `Several computers linked to a server to share programs and storage ... `,
     options: [
       { opt: `Grouping`, isTrue: false },
       { opt: `Library`, isTrue: false },
@@ -64,7 +64,7 @@ const questionArray1 = [
     ],
   },
   {
-    question: `__ is a software program used to view Web pages`,
+    question: ` ... is a software program used to view Web pages`,
     options: [
       { opt: `site`, isTrue: false },
       { opt: `host`, isTrue: false },
@@ -73,7 +73,7 @@ const questionArray1 = [
     ],
   },
   {
-    question: `The first computer was programmed using ....`,
+    question: `The first computer was programmed using ... `,
     options: [
       { opt: `Assembly language`, isTrue: false },
       { opt: `Spaghetti code`, isTrue: false },
@@ -98,6 +98,7 @@ const questions = [...questionArray1];
 let marksArray = [];
 let marksObtained = 0;
 let totalMarks = questions.length;
+let currentpage, currentQuestion;
 for (let m = 0; m < questions.length; m++) {
   marksArray.push(0);
 }
@@ -106,7 +107,6 @@ const app = document.querySelector("#app");
 const startButton = document.querySelector(".start-button");
 const startScreen = document.querySelector(".start-screen");
 const questionRow = document.querySelector(".questions-row");
-const prevButton = document.querySelectorAll(".prev-button");
 const resultScreen = document.querySelector(".result-screen");
 
 // FUNCTIONS
@@ -147,7 +147,9 @@ function startQuiz() {
     marksArray[m] = 0;
   }
   app.scrollTop = window.innerHeight;
+  currentpage = "questionRow";
   questionRow.scrollLeft = 0;
+  currentQuestion = 0;
 }
 
 function PreveNextSubmitButton() {
@@ -156,7 +158,8 @@ function PreveNextSubmitButton() {
     const nextbtn = document.getElementsByClassName("next-button")[p];
     if (p != 0) {
       prevbtn.addEventListener("click", () => {
-        questionRow.scrollLeft = window.innerWidth * (p - 1);
+        currentQuestion = p - 1;
+        questionRow.scrollLeft = window.innerWidth * currentQuestion;
       });
     } else {
       prevbtn.style.color = "grey";
@@ -165,7 +168,8 @@ function PreveNextSubmitButton() {
 
     if (p < questions.length - 1) {
       nextbtn.addEventListener("click", () => {
-        questionRow.scrollLeft = window.innerWidth * (p + 1);
+        currentQuestion = p + 1;
+        questionRow.scrollLeft = window.innerWidth * currentQuestion;
       });
     } else {
       nextbtn.classList.add("submit-button");
@@ -180,15 +184,28 @@ function PreveNextSubmitButton() {
     for (const questionMark of marksArray) {
       marksObtained += questionMark;
     }
-    if (parseInt(totalMarks) < 9) {
+    if (parseInt(totalMarks) < 10) {
       totalMarks = "0" + parseInt(totalMarks);
     }
-    if (parseInt(marksObtained) < 9) {
+    if (parseInt(marksObtained) < 10) {
       marksObtained = "0" + parseInt(marksObtained);
     }
     app.scrollTop = window.innerHeight * 2;
+    currentpage = "resultScreen";
     resultScreen.innerHTML = `<div class="your-result">Your Score is&nbsp; ${marksObtained}/${totalMarks}</div>
     <div class="restart-button flex center" onclick="startQuiz()">Restart</div>`;
+  });
+
+  window.addEventListener("keydown", (e) => {
+    if (currentpage === "questionRow") {
+      if (e.code === "ArrowRight" && currentQuestion < questions.length - 1) {
+        currentQuestion++;
+        questionRow.scrollLeft = window.innerWidth * currentQuestion;
+      } else if (e.code === "ArrowLeft" && currentQuestion != 0) {
+        currentQuestion--;
+        questionRow.scrollLeft = window.innerWidth * currentQuestion;
+      }
+    }
   });
 }
 
@@ -219,8 +236,9 @@ function questionChecker() {
 
 // SEQUENCE
 
+app.scrollTop = 0;
+currentpage = "startScreen";
 populateQuestions(questions);
 PreveNextSubmitButton();
 questionChecker();
-app.scrollTop = 0;
 questionRow.scrollTop = 0;
