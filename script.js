@@ -237,8 +237,8 @@ function questionChecker() {
 // SEQUENCE
 
 app.scrollTop = 0;
-currentpage = "startScreen";
 populateQuestions(questions);
 PreveNextSubmitButton();
 questionChecker();
+currentpage = "startScreen";
 questionRow.scrollTop = 0;
